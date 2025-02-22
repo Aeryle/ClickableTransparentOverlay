@@ -43,8 +43,12 @@
 
     public bool ProcessMessage(WindowMessage msg, UIntPtr wParam, IntPtr lParam)
     {
-      if (ImGui.GetCurrentContext().ActiveId == 0)
-        return false;
+      unsafe
+      {
+        // if (ImGui.GetCurrentContext().ActiveId == 0)
+        if (new IntPtr(ImGui.GetCurrentContext()) == IntPtr.Zero)
+          return false;
+      }
 
       var io = ImGui.GetIO();
       switch (msg)
